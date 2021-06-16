@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
 @RestController
 @RequestMapping("/patients")
 public class PatientController {
