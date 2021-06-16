@@ -25,6 +25,7 @@ export class TimelineComponent implements OnInit {
       this.entries = events.map((event: Event) => ({
         header: event.name,
         content: event.description,
+        date: event.created_at,
       }));
     });
   }
