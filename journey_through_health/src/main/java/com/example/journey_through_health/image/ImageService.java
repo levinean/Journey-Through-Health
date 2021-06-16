@@ -13,23 +13,23 @@ public class ImageService {
     @Autowired
     private ImageRepository imageRepo;
 
-    public Image addImage(Image newImage){
+    public Image addImage(Image newImage) {
         Image image = imageRepo.save(newImage);
         return image;
     }
 
     public Image deleteImage(Long imageId) throws Exception {
-        Optional<Image> image =  imageRepo.findById(imageId);
-        if(image.isEmpty()) {
+        Optional<Image> image = imageRepo.findById(imageId);
+        if (image.isEmpty()) {
             throw new Exception(String.format("No image with the id %d", imageId));
         }
         imageRepo.deleteById(imageId);
         return image.get();
     }
 
-    public Image editImage(Long imageId,Image newImage) throws Exception {
-        Optional<Image> image =  imageRepo.findById(imageId);
-        if(image.isEmpty()) {
+    public Image editImage(Long imageId, Image newImage) throws Exception {
+        Optional<Image> image = imageRepo.findById(imageId);
+        if (image.isEmpty()) {
             throw new Exception(String.format("No image with the id %d", imageId));
         }
         imageRepo.deleteById(imageId);
