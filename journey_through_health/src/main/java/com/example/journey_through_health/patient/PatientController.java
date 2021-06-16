@@ -29,9 +29,9 @@ public class PatientController {
     }
 
     @PostMapping()
-    public ResponseEntity<Object> createPatient(@RequestBody Patient patient) {
+    public ResponseEntity<Patient> createPatient(@RequestBody Patient patient) {
         patientService.createPatient(patient);
-        return new ResponseEntity<>("Patient is created successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>(patient, HttpStatus.CREATED);
     }
 
     @PostMapping("/{id}/events")

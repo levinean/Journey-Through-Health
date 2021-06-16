@@ -11,8 +11,7 @@ public class NoteService {
     private NoteRepository noteRepo;
 
     public Note addNote(Note newNote) {
-        Note note = noteRepo.save(newNote);
-        return note;
+        return noteRepo.save(newNote);
     }
 
     public Note deleteNote(Long noteId) throws Exception {
@@ -30,7 +29,6 @@ public class NoteService {
             throw new Exception(String.format("No note with the id %d", noteId));
         }
         noteRepo.deleteById(noteId);
-        Note savedNote = noteRepo.save(newNote);
-        return savedNote;
+        return noteRepo.save(newNote);
     }
 }

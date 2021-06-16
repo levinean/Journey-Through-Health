@@ -16,7 +16,7 @@ public class ImageController {
         return service.addImage(newImage);
     }
 
-    @PutMapping("/${id}")
+    @PutMapping("/{id}")
     public Image editImage(@RequestBody Image newImage, @PathVariable Long id) throws Exception {
         return service.editImage(id, newImage);
     }

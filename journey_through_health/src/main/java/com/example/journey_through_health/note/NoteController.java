@@ -1,6 +1,5 @@
 package com.example.journey_through_health.note;
 
-import com.example.journey_through_health.note.Note;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +15,7 @@ public class NoteController {
         return service.addNote(newNote);
     }
 
-    @PutMapping("/${id}")
+    @PutMapping("/{id}")
     public Note editNote(@RequestBody Note newNote, @PathVariable Long id) throws Exception {
         return service.editNote(id, newNote);
     }
