@@ -22,3 +22,8 @@ export type Event = {
   type: EVENT_TYPE;
   priority: EVENT_PRIORITY;
 };
+
+export type TimelineEvent = {
+  header: string;
+  content: string;
+};
