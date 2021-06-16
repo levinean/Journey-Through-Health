@@ -26,4 +26,5 @@ export type Event = {
 export type TimelineEvent = {
   header: string;
   content: string;
+  date: string;
 };
