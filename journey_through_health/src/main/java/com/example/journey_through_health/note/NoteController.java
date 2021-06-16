@@ -16,7 +16,7 @@ public class NoteController {
         return service.addNote(newNote);
     }
 
-    @PutMapping("/${id}")
+    @PutMapping("/{id}")
     public Note editNote(@RequestBody Note newNote, @PathVariable Long id) throws Exception {
         return service.editNote(id, newNote);
     }
