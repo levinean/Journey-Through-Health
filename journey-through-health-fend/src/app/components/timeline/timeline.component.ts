@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { EventServiceService } from '../../services/event-service.service';
+import { Event } from '../../types/event';
 
 @Component({
   selector: 'app-timeline',
@@ -6,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./timeline.component.css'],
 })
 export class TimelineComponent implements OnInit {
+  entries: { header: String; content: String } = [];
   alternate: boolean = true;
   toggle: boolean = true;
   color: boolean = false;
@@ -15,16 +18,16 @@ export class TimelineComponent implements OnInit {
   dotAnimation: boolean = true;
   side = 'left';
 
-  constructor() {}
+  constructor(private eventService: EventServiceService) {}
 
-  ngOnInit(): void {}
-
-  entries = [
-    {
-      header: 'header',
-      content: 'content',
-    },
-  ];
+  ngOnInit(): void {
+    this.eventService.getAllEvents().subscribe((events: Event[]) => {
+      this.entries = events.map((event: Event) => ({
+        header: event.name,
+        content: event.description,
+      }));
+    });
+  }
 
   onHeaderClick(event: MouseEvent) {
     if (!this.expandEnabled) {
