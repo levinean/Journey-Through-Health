@@ -1,11 +1,11 @@
 package com.example.journey_through_health.patient;
 
+import com.example.journey_through_health.event.Event;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @ToString
@@ -15,4 +15,15 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @OneToMany(mappedBy = "patient")
+    private List<Event> events;
+
+    @Column
+    private String name;
+
+    @Column
+    private String email;
+
+    @Column
+    private String phoneNumber;
 }
