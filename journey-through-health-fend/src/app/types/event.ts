@@ -18,7 +18,7 @@ export type Event = {
   name: string;
   description: string;
   hospital: string;
-  date: string;
+  created_at: string;
   type: EVENT_TYPE;
   priority: EVENT_PRIORITY;
 };
@@ -26,4 +26,5 @@ export type Event = {
 export type TimelineEvent = {
   header: string;
   content: string;
+  date: string;
 };

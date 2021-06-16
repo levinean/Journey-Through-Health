@@ -22,7 +22,7 @@ export class EventServiceService {
     name: 'test',
     description: 'test Description',
     hospital: 'testHospital',
-    date: '05-02-2020 10:31:42',
+    created_at: '05-02-2020 10:31:42',
     type: EVENT_TYPE.APPOINTMENT,
     priority: EVENT_PRIORITY.HIGH,
   };
