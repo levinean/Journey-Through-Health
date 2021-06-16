@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventServiceService } from '../../services/event-service.service';
-import { Event } from '../../types/event';
+import { Event, TimelineEvent } from '../../types/event';
 
 @Component({
   selector: 'app-timeline',
@@ -8,7 +8,7 @@ import { Event } from '../../types/event';
   styleUrls: ['./timeline.component.css'],
 })
 export class TimelineComponent implements OnInit {
-  entries: { header: String; content: String } = [];
+  entries: TimelineEvent[] = [];
   alternate: boolean = true;
   toggle: boolean = true;
   color: boolean = false;
