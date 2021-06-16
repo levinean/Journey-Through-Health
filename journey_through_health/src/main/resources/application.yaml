@@ -1,8 +1,8 @@
 spring:
     datasource:
-      url: jdbc:postgresql://localhost:5432/iam
-      username: iam
-      password: iam
+      url: jdbc:postgresql://localhost:5432/journeydb
+      username: journey
+      password: journey
     jpa:
       hibernate:
         ddl-auto: update
