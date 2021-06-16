@@ -3,6 +3,7 @@ package com.example.journey_through_health.note;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Optional;
 
 @Service
@@ -11,6 +12,7 @@ public class NoteService {
     private NoteRepository noteRepo;
 
     public Note addNote(Note newNote) {
+        newNote.setCreatedAt(Instant.now());
         return noteRepo.save(newNote);
     }
 

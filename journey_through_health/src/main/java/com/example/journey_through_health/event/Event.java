@@ -6,8 +6,10 @@ import com.example.journey_through_health.patient.Patient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.List;
 
 @Entity
@@ -43,4 +45,8 @@ public class Event {
 
     @Column
     private String priority;
+
+    @CreatedDate
+    @Column
+    private Instant createdAt;
 }

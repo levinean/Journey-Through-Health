@@ -2,6 +2,7 @@ package com.example.journey_through_health.event;
 
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ public class EventServiceImpl  implements EventService{
 
     @Override
     public void createEvent(Event event) {
+        event.setCreatedAt(Instant.now());
         eventRepository.save(event);
     }
 

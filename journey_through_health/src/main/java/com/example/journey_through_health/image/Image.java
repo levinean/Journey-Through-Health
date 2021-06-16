@@ -3,6 +3,7 @@ package com.example.journey_through_health.image;
 import com.example.journey_through_health.event.Event;
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -23,6 +24,7 @@ public class Image {
     @Lob
     private Byte[] image;
 
+    @CreatedDate
     @Column
-    private Instant date;
+    private Instant createdAt;
 }

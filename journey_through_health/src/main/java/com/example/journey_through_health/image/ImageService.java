@@ -1,10 +1,9 @@
 package com.example.journey_through_health.image;
 
-import com.example.journey_through_health.image.Image;
-import com.example.journey_through_health.image.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Optional;
 
 @Service
@@ -14,8 +13,8 @@ public class ImageService {
     private ImageRepository imageRepo;
 
     public Image addImage(Image newImage) {
-        Image image = imageRepo.save(newImage);
-        return image;
+        newImage.setCreatedAt(Instant.now());
+        return imageRepo.save(newImage);
     }
 
     public Image deleteImage(Long imageId) throws Exception {
@@ -33,7 +32,6 @@ public class ImageService {
             throw new Exception(String.format("No image with the id %d", imageId));
         }
         imageRepo.deleteById(imageId);
-        Image savedImage = imageRepo.save(newImage);
-        return savedImage;
+        return imageRepo.save(newImage);
     }
 }

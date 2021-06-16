@@ -3,6 +3,7 @@ package com.example.journey_through_health.note;
 import com.example.journey_through_health.event.Event;
 import lombok.Data;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Note {
     @Column
     private String note;
 
+    @CreatedDate
     @Column
-    private Instant date;
+    private Instant createdAt;
 }

@@ -14,7 +14,7 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
-    @GetMapping()
+    @GetMapping("")
     public ResponseEntity<Object> getAllEvents(@RequestParam(value = "type", defaultValue = "all") String type,
                                                @RequestParam(value = "priority", defaultValue = "all") String priority) {
         return new ResponseEntity<>(eventService.getEvents(), HttpStatus.OK);
