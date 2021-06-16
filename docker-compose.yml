@@ -1,0 +1,60 @@
+version: '3.8'
+services:
+  postgres:
+    container_name: pg_container
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: journey
+      POSTGRES_PASSWORD: journey
+      POSTGRES_DB: journeydb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "5432:5432"
+    networks:
+      - journey
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.1
+    container_name: elasticsearch
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 9200:9200
+    networks:
+      - journey
+
+  redis:
+    image: redis
+    volumes:
+      - /var/lib/redis/:/data/
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 6379:6379
+    networks:
+      - journey
+
+volumes:
+  postgres_data:
+  es-data:
+    driver: local
+
+networks:
+  journey:
+    driver: bridge
