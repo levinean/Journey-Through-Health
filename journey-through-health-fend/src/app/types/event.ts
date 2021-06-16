@@ -1,0 +1,24 @@
+export enum EVENT_TYPE {
+  APPOINTMENT = 'appointment',
+  SURGERY = 'surgery',
+  EXAM = 'exam',
+  TEST = 'test',
+  IMAGING = 'imaging',
+}
+
+export enum EVENT_PRIORITY {
+  HIGH = 'high',
+  MEDIUM = 'medium',
+  LOW = 'low',
+}
+
+export type Event = {
+  id: string;
+  patient_id: string;
+  name: string;
+  description: string;
+  hospital: string;
+  date: string;
+  type: EVENT_TYPE;
+  priority: EVENT_PRIORITY;
+};
