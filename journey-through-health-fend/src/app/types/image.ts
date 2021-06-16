@@ -1,6 +1,6 @@
 export type Image = {
   id: string;
-  event_id: string;
+  eventId: string;
   image: string;
-  created_at: string;
+  createdAt: string;
 };
