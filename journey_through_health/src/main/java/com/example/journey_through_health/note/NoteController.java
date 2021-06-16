@@ -12,7 +12,7 @@ public class NoteController {
         System.out.println("Note added");
     }
 
-    @PutMapping("/${id}")
+    @PutMapping("/{id}")
     public void editNote(@RequestBody Note newNote,@PathVariable Long id) {
         System.out.println("Note edited");
     }

@@ -7,13 +7,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/images")
 public class ImageController {
 
-
     @PostMapping()
     public void addImage(@RequestBody Image newImage) {
         System.out.println("Image added");
     }
 
-    @PutMapping("/${id}")
+    @PutMapping("/{id}")
     public void editImage(@RequestBody Image newImage,@PathVariable Long id) {
         System.out.println("Image edited");
     }

@@ -3,6 +3,8 @@ package com.example.journey_through_health.event;
 import com.example.journey_through_health.image.Image;
 import com.example.journey_through_health.note.Note;
 import com.example.journey_through_health.patient.Patient;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -10,13 +12,15 @@ import java.util.List;
 
 @Entity
 @ToString
+@Data
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name="patient_id", nullable=false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "patient_id", nullable = false)
+    @JsonIgnore
     private Patient patient;
 
     @OneToMany(mappedBy = "event")

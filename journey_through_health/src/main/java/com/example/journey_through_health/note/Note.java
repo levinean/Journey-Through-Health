@@ -1,6 +1,7 @@
 package com.example.journey_through_health.note;
 
 import com.example.journey_through_health.event.Event;
+import lombok.Data;
 import lombok.ToString;
 
 import java.time.Instant;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @ToString
+@Data
 public class Note {
 
     @Id

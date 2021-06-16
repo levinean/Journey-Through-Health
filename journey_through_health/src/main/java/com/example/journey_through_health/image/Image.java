@@ -1,6 +1,7 @@
 package com.example.journey_through_health.image;
 
 import com.example.journey_through_health.event.Event;
+import lombok.Data;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.time.Instant;
 
 @Entity
 @ToString
+@Data
 public class Image {
 
     @Id

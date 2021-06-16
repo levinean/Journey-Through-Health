@@ -1,32 +1,40 @@
 package com.example.journey_through_health.event;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/events")
 public class EventController {
+    @Autowired
+    private EventService eventService;
 
     @GetMapping()
-    public void getAllEvents(@RequestParam(value = "type", defaultValue = "all") String type, @RequestParam(value = "priority", defaultValue = "all") String priority) {
-        System.out.println("Events gotten");
+    public ResponseEntity<Object> getAllEvents(@RequestParam(value = "type", defaultValue = "all") String type,
+                                               @RequestParam(value = "priority", defaultValue = "all") String priority) {
+        return new ResponseEntity<>(eventService.getEvents(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public void getEvent(@PathVariable Long id) {
-        System.out.println("Event gotten");
+    @ResponseBody
+    public ResponseEntity<Event> getEvent(@PathVariable Long id) {
+        Optional<Event> eventData = eventService.getEvent(id);
+
+        return eventData
+                .map(event -> new ResponseEntity<>(event, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping()
-    public void addEvent(@RequestBody Event newEvent) {
-        System.out.println("Event added");
-    }
-
-    @PutMapping("/${id}")
-    public void editEvent(@RequestBody Event newEvent,@PathVariable Long id) {
+    @PutMapping("/{id}")
+    public void editEvent(@RequestBody Event newEvent, @PathVariable Long id) {
         System.out.println("Event edited");
     }
 
-    @DeleteMapping ("/{id}")
+    @DeleteMapping("/{id}")
     public void deleteEvent(@PathVariable Long id) {
         System.out.println("Event deleted");
     }

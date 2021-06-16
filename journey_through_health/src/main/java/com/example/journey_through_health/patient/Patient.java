@@ -1,14 +1,14 @@
 package com.example.journey_through_health.patient;
 
 import com.example.journey_through_health.event.Event;
+import lombok.Data;
 import lombok.ToString;
-
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
 @ToString
+@Data
 public class Patient {
 
     @Id
