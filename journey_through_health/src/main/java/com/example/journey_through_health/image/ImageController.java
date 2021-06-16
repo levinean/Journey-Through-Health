@@ -1,24 +1,28 @@
 package com.example.journey_through_health.image;
 
 import com.example.journey_through_health.image.Image;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/images")
 public class ImageController {
 
+    @Autowired
+    private ImageService service;
+
     @PostMapping()
-    public void addImage(@RequestBody Image newImage) {
-        System.out.println("Image added");
+    public Image addImage(@RequestBody Image newImage) {
+        return service.addImage(newImage);
     }
 
-    @PutMapping("/{id}")
-    public void editImage(@RequestBody Image newImage,@PathVariable Long id) {
-        System.out.println("Image edited");
+    @PutMapping("/${id}")
+    public Image editImage(@RequestBody Image newImage, @PathVariable Long id) throws Exception {
+        return service.editImage(id, newImage);
     }
 
-    @DeleteMapping ("/{id}")
-    public void deleteImage(@PathVariable Long id) {
-        System.out.println("Image deleted");
+    @DeleteMapping("/{id}")
+    public Image deleteImage(@PathVariable Long id) throws Exception {
+        return service.deleteImage(id);
     }
 }
