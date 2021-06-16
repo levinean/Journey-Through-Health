@@ -30,33 +30,54 @@ export class EventServiceService {
   constructor(private http: HttpClient) {}
 
   getAllEvents(
-    type: EVENT_TYPE,
-    priority: EVENT_PRIORITY
+    type?: EVENT_TYPE,
+    priority?: EVENT_PRIORITY
   ): Observable<Event[]> {
     const events: Event[] = [];
+    const queryParams = this.buildSearchParams(type, priority);
+    const query =
+      queryParams.length === 0 ? this.apiUrl : `${this.apiUrl}?${queryParams}`;
 
     events.push(this.fakeEvent);
-    this.http.get<Event[]>(this.apiUrl);
-    return of(events);
+
+    return this.http.get<Event[]>(query);
   }
 
   createEvent(newEvent: Event): Observable<Event> {
-    this.http.post<Event>(this.apiUrl, newEvent, httpOptions);
-    return of(this.fakeEvent);
+    return this.http.post<Event>(this.apiUrl, newEvent, httpOptions);
   }
 
   getEvent(eventId: string): Observable<Event> {
-    this.http.get<Event>(`${this.apiUrl}/${eventId}`);
-    return of(this.fakeEvent);
+    return this.http.get<Event>(`${this.apiUrl}/${eventId}`);
   }
 
   editEvent(eventId: string, newEvent: Event): Observable<Event> {
-    this.http.put<Event>(`${this.apiUrl}/${eventId}`, newEvent, httpOptions);
-    return of(this.fakeEvent);
+    return this.http.put<Event>(
+      `${this.apiUrl}/${eventId}`,
+      newEvent,
+      httpOptions
+    );
   }
 
   deleteEvent(eventId: string): Observable<Event> {
-    this.http.delete<Event>(`${this.apiUrl}/${eventId}`);
-    return of(this.fakeEvent);
+    return this.http.delete<Event>(`${this.apiUrl}/${eventId}`);
+  }
+
+  private buildSearchParams(
+    type?: EVENT_TYPE,
+    priority?: EVENT_PRIORITY
+  ): string {
+    let query = '';
+    const searchParams: { [searchParam: string]: string } = {};
+    if (type) searchParams['type'] = type;
+    if (priority) searchParams['priority'] = priority;
+    const hasSearchParams = Object.entries(searchParams).length !== 0;
+    if (hasSearchParams) {
+      for (const [key, value] of Object.entries(searchParams)) {
+        query += `${key}=${value}&`;
+      }
+      query.slice(query.length - 1);
+    }
+    return query;
   }
 }
