@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Subscription } from 'rxjs';
+import * as moment from 'moment';
 
 import { EventServiceService } from '../../services/event/event-service.service';
 import { FilterServiceService } from '../../services/filters/filter-service.service';
@@ -38,13 +39,26 @@ export class TimelineComponent implements OnInit {
       .subscribe(({ filters, searchNameFilter, searchHospitalFilter }) => {
         this.eventService
           .getAllEvents(filters, searchNameFilter, searchHospitalFilter)
-          .subscribe((events: Event[]) => (this.entries = events));
+          .subscribe(
+            (events: Event[]) =>
+              (this.entries = events.map((event) => {
+                event.created_at = moment(event.created_at).format(
+                  'MMMM Do YYYY, h:mm:ss a'
+                );
+                return event;
+              }))
+          );
       });
   }
 
   ngOnInit(): void {
     this.eventService.getAllEvents().subscribe((events: Event[]) => {
-      this.entries = events;
+      this.entries = events.map((event) => {
+        event.created_at = moment(event.created_at).format(
+          'MMMM Do YYYY, h:mm:ss a'
+        );
+        return event;
+      });
     });
   }
 

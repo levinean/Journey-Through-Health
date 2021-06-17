@@ -27,6 +27,7 @@ import { FiltersComponent } from './components/filters/filters.component';
     SidebarComponent,
     FiltersComponent,
   ],
+  entryComponents: [DialogContent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
