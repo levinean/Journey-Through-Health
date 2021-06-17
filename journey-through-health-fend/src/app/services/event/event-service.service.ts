@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
-import { Event, EVENT_PRIORITY, EVENT_TYPE } from '../types/event';
+import { Event, EVENT_PRIORITY, EVENT_TYPE } from '../../types/event';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -22,9 +22,11 @@ export class EventServiceService {
     name: 'test',
     description: 'test Description',
     hospital: 'testHospital',
-    createdAt: '05-02-2020 10:31:42',
+    created_at: '05-02-2020 10:31:42',
     type: EVENT_TYPE.APPOINTMENT,
     priority: EVENT_PRIORITY.HIGH,
+    images: [],
+    notes: [],
   };
 
   constructor(private http: HttpClient) {}

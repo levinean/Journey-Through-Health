@@ -1,6 +1,7 @@
 package com.example.journey_through_health.note;
 
 import com.example.journey_through_health.event.Event;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
@@ -19,6 +20,7 @@ public class Note {
 
     @ManyToOne
     @JoinColumn(name="event_id", nullable=false)
+    @JsonIgnore
     private Event event;
 
     @Column

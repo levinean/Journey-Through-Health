@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EventServiceService } from '../../services/event-service.service';
-import { Event, TimelineEvent } from '../../types/event';
+import { EventServiceService } from '../../services/event/event-service.service';
+import { Event, EVENT_PRIORITY } from '../../types/event';
 
 @Component({
   selector: 'app-timeline',
@@ -8,7 +8,7 @@ import { Event, TimelineEvent } from '../../types/event';
   styleUrls: ['./timeline.component.css'],
 })
 export class TimelineComponent implements OnInit {
-  entries: TimelineEvent[] = [];
+  entries: Event[] = [];
   alternate: boolean = true;
   toggle: boolean = true;
   color: boolean = false;
@@ -22,12 +22,7 @@ export class TimelineComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventService.getAllEvents().subscribe((events: Event[]) => {
-      this.entries = events.map((event: Event) => ({
-        header: event.name,
-        content: event.description,
-        date: event.createdAt,
-        hospital: event.hospital,
-      }));
+      this.entries = events;
     });
   }
 
@@ -45,5 +40,16 @@ export class TimelineComponent implements OnInit {
 
   onExpandEntry(expanded: boolean, index: number) {
     console.log(`Expand status of entry #${index} changed to ${expanded}`);
+  }
+
+  getColorForPriority(type: EVENT_PRIORITY): string {
+    switch (type) {
+      case EVENT_PRIORITY.HIGH:
+        return 'red';
+      case EVENT_PRIORITY.MEDIUM:
+        return 'orange';
+      case EVENT_PRIORITY.LOW:
+        return 'yellow';
+    }
   }
 }

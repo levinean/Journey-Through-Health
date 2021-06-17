@@ -1,5 +1,8 @@
 package com.example.journey_through_health.event;
 
+import com.example.journey_through_health.note.Note;
+import com.example.journey_through_health.note.NoteService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +14,9 @@ import java.util.Optional;
 @RequestMapping("/events")
 public class EventController {
     private final EventService eventService;
+
+    @Autowired
+    private NoteService noteService;
 
     public EventController(EventService eventService) {
         this.eventService = eventService;
@@ -30,6 +36,18 @@ public class EventController {
         return eventData
                 .map(event -> new ResponseEntity<>(event, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PostMapping("/{id}/notes")
+    public ResponseEntity<Note> addNote(@RequestBody Note note,@PathVariable Long id) {
+        Optional<Event> eventData = eventService.get(id);
+        if (eventData.isPresent()) {
+            note.setEvent(eventData.get());
+            Note createdNote = noteService.create(note);
+            return new ResponseEntity<Note>(createdNote, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<Note>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping("/{id}")
