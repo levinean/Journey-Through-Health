@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { EventServiceService } from '../../services/event/event-service.service';
+import { NoteServiceService } from '../../services/note/note-service.service';
 import { Event, EVENT_PRIORITY } from '../../types/event';
+import { Note } from '../../types/note';
 
 @Component({
   selector: 'app-timeline',
@@ -17,8 +20,13 @@ export class TimelineComponent implements OnInit {
   contentAnimation: boolean = true;
   dotAnimation: boolean = true;
   side = 'left';
+  showAddNoteModal = false;
 
-  constructor(private eventService: EventServiceService) {}
+  constructor(
+    private eventService: EventServiceService,
+    private noteService: NoteServiceService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.eventService.getAllEvents().subscribe((events: Event[]) => {
@@ -51,5 +59,34 @@ export class TimelineComponent implements OnInit {
       case EVENT_PRIORITY.LOW:
         return 'yellow';
     }
+  }
+
+  openDialog(eventId: string, eventIndex: number) {
+    const dialogRef = this.dialog.open(DialogContent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(result, result !== null, result.length > 0);
+      if (result !== null && result.length > 0) {
+        const newNote: Note = {
+          note: result,
+        };
+        this.noteService
+          .createNote(newNote, eventId)
+          .subscribe((result) => this.entries[eventIndex].notes.push(result));
+      }
+    });
+  }
+}
+
+@Component({
+  selector: 'dialog-content',
+  templateUrl: 'dialog-content.html',
+})
+export class DialogContent {
+  constructor() {}
+  note: string = '';
+
+  updateNote(event: any): void {
+    this.note = event.target.value;
   }
 }
