@@ -6,4 +6,10 @@ spring:
     jpa:
       hibernate:
         ddl-auto: update
-
+    elasticsearch:
+      rest:
+        connection-timeout: 1s
+        uris: localhost:9200
+        read-timeout: 1m
+        password:
+        username:
