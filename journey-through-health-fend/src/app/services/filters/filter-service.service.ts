@@ -7,7 +7,8 @@ import { Filter, SearchFilter } from 'src/app/types/event';
 })
 export class FilterServiceService {
   filters: Filter[] = [];
-  searchFilter: SearchFilter = '';
+  searchNameFilter: SearchFilter = '';
+  searchHospitalFilter: SearchFilter = '';
   private subject = new Subject<any>();
 
   constructor() {}
@@ -20,21 +21,33 @@ export class FilterServiceService {
     this.filters = checkedTypeFilters.concat(checkedPriorityFilters);
     this.subject.next({
       filters: this.filters,
-      searchFilter: this.searchFilter,
+      searchNameFilter: this.searchNameFilter,
+      searchHospitalFilter: this.searchHospitalFilter,
     });
   }
 
-  updateSearchFilter(newSearch: SearchFilter) {
-    this.searchFilter = newSearch;
+  updateSearchNameFilter(newSearch: SearchFilter) {
+    this.searchNameFilter = newSearch;
     this.subject.next({
       filters: this.filters,
-      searchFilter: this.searchFilter,
+      searchNameFilter: this.searchNameFilter,
+      searchHospitalFilter: this.searchHospitalFilter,
+    });
+  }
+
+  updateSearchHospitalFilter(newSearch: SearchFilter) {
+    this.searchHospitalFilter = newSearch;
+    this.subject.next({
+      filters: this.filters,
+      searchNameFilter: this.searchNameFilter,
+      searchHospitalFilter: this.searchHospitalFilter,
     });
   }
 
   onFilterChange(): Observable<{
     filters: Filter[];
-    searchFilter: SearchFilter;
+    searchNameFilter: SearchFilter;
+    searchHospitalFilter: SearchFilter;
   }> {
     return this.subject.asObservable();
   }

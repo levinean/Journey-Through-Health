@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Filter } from 'src/app/types/event';
+import { Filter, SearchFilter } from 'src/app/types/event';
 import { FilterServiceService } from '../../services/filters/filter-service.service';
 
 @Component({
@@ -20,6 +20,8 @@ export class FiltersComponent implements OnInit {
     { checked: false, name: 'Exam', searchParam: 'exam' },
     { checked: false, name: 'Test', searchParam: 'test' },
   ];
+  searchNameFilter: SearchFilter = '';
+  searchHospitalFilter: SearchFilter = '';
   constructor(private filterService: FilterServiceService) {}
 
   ngOnInit(): void {}
@@ -34,5 +36,14 @@ export class FiltersComponent implements OnInit {
     this.priorityFilters[filterIndex].checked =
       !this.priorityFilters[filterIndex].checked;
     this.filterService.updateFilters(this.typeFilters, this.priorityFilters);
+  }
+  updateSearchNameFilter(event: any) {
+    this.searchNameFilter = event.target.value;
+    this.filterService.updateSearchNameFilter(this.searchNameFilter);
+  }
+
+  updateSearchHospitalFilter(event: any) {
+    this.searchHospitalFilter = event.target.value;
+    this.filterService.updateSearchHospitalFilter(this.searchHospitalFilter);
   }
 }

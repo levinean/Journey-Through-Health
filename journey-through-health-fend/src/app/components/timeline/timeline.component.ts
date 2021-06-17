@@ -35,10 +35,13 @@ export class TimelineComponent implements OnInit {
   ) {
     this.subscription = this.filterService
       .onFilterChange()
-      .subscribe(({ filters, searchFilter }) => {
+      .subscribe(({ filters, searchNameFilter, searchHospitalFilter }) => {
         this.eventService
-          .getAllEvents(filters, searchFilter)
-          .subscribe((events: Event[]) => (this.entries = events));
+          .getAllEvents(filters, searchNameFilter, searchHospitalFilter)
+          .subscribe((events: Event[]) => {
+            console.log(events);
+            this.entries = events;
+          });
       });
   }
 
@@ -79,7 +82,6 @@ export class TimelineComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogContent);
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result, result !== null, result.length > 0);
       if (result !== null && result.length > 0) {
         const newNote: Note = {
           note: result,

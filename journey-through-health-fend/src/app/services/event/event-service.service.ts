@@ -40,9 +40,14 @@ export class EventServiceService {
 
   getAllEvents(
     filters?: Filter[],
-    searchFilter?: SearchFilter
+    searchNameFilter?: SearchFilter,
+    searchHospitalFilter?: SearchFilter
   ): Observable<Event[]> {
-    const queryParams = this.buildSearchParams(filters, searchFilter);
+    const queryParams = this.buildSearchParams(
+      filters,
+      searchNameFilter,
+      searchHospitalFilter
+    );
     const query =
       queryParams.length === 0
         ? this.apiUrl
@@ -73,7 +78,8 @@ export class EventServiceService {
 
   private buildSearchParams(
     filters?: Filter[],
-    searchFilter?: SearchFilter
+    searchNameFilter?: SearchFilter,
+    searchHospitalFilter?: SearchFilter
   ): string {
     let query = '';
     if (filters && filters.length > 0) {
@@ -83,8 +89,12 @@ export class EventServiceService {
       query += filterSearchParams;
     }
 
-    if (searchFilter && searchFilter.length > 0) {
-      query = [query, searchFilter].join(',');
+    if (searchNameFilter && searchNameFilter.length > 0) {
+      query = [query, searchNameFilter].join(',');
+    }
+
+    if (searchHospitalFilter && searchHospitalFilter.length > 0) {
+      query = [query, searchHospitalFilter].join(',');
     }
     return query;
   }

@@ -27,7 +27,6 @@ export class NoteServiceService {
   constructor(private http: HttpClient) {}
 
   createNote(newNote: Note, eventId: string): Observable<Note> {
-    console.log(newNote, eventId);
     return this.http.post<Note>(
       `${this.eventApiUrl}/${eventId}/notes`,
       newNote,
