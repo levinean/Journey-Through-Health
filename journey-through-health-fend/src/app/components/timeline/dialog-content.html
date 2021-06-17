@@ -1,8 +1,25 @@
-<h2 mat-dialog-title>Create New Note</h2>
-<mat-dialog-content class="mat-typography">
-  <input type="text" (input)="updateNote($event)" />
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="note" cdkFocusInitial>Create</button>
-</mat-dialog-actions>
+<div
+  class="DialogContainer"
+  style="
+    position: fixed;
+    top: 32%;
+    left: 32%;
+    background: grey;
+    padding: 20px;
+    width: 400px;
+    height: 300px;
+  "
+>
+  <h2 mat-dialog-title>Create New Note</h2>
+  <mat-dialog-content class="mat-typography">
+    <input
+      type="text"
+      (input)="updateNote($event)"
+      style="width: 100%; height: 100px; margin: 40px 0"
+    />
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="note" cdkFocusInitial>Create</button>
+  </mat-dialog-actions>
+</div>

@@ -26,3 +26,13 @@ p {
   font-size: 20px;
   font-weight: 1000;
 }
+
+.DialogContainer {
+  position: fixed;
+  top: 32%;
+  left: 32%;
+  background: grey;
+  padding: 20px;
+  width: 400px;
+  height: 300px;
+}
