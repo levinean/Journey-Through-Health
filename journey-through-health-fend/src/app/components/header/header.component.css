@@ -1,0 +1,8 @@
+.Title {
+  font-size: 36px;
+  background-color: rgb(240, 233, 233);
+  width: 100%;
+}
+.mat-toolbar-single-row {
+  padding: 0;
+}

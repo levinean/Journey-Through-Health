@@ -1,0 +1,19 @@
+<div class="Filters">
+  <div class="Filters-Priority">
+    <span>Priorities</span>
+    <form>
+      <div *ngFor="let filter of priorityFilters">
+        <input type="checkbox" [checked]="filter.checked" /> {{ filter.name }}
+      </div>
+    </form>
+  </div>
+
+  <div class="Filters-Types">
+    <span>Types</span>
+    <form>
+      <div *ngFor="let filter of typeFilters">
+        <input type="checkbox" [checked]="filter.checked" /> {{ filter.name }}
+      </div>
+    </form>
+  </div>
+</div>

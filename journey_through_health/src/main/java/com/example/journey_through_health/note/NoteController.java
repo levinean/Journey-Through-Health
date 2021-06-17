@@ -16,11 +16,6 @@ public class NoteController {
         this.noteService = noteService;
     }
 
-    @PostMapping()
-    public Note addNote(@RequestBody Note note) {
-        return noteService.create(note);
-    }
-
     @PutMapping("/{id}")
     public Note editNote(@RequestBody Note newNote, @PathVariable Long id) {
         return noteService.edit(id, newNote);

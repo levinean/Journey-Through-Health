@@ -1,3 +1,6 @@
+import { Image } from './image';
+import { Note } from './note';
+
 export enum EVENT_TYPE {
   APPOINTMENT = 'appointment',
   SURGERY = 'surgery',
@@ -18,14 +21,9 @@ export type Event = {
   name: string;
   description: string;
   hospital: string;
-  createdAt: string;
+  created_at: string;
   type: EVENT_TYPE;
   priority: EVENT_PRIORITY;
-};
-
-export type TimelineEvent = {
-  header: string;
-  content: string;
-  date: string;
-  hospital: string;
+  notes: Note[];
+  images: Image[];
 };

@@ -3,19 +3,28 @@
     *ngFor="let entry of entries; let i = index"
     (expand)="onExpandEntry($event, i)"
   >
-    <mgl-timeline-entry-header (click)="onHeaderClick($event)">
-      <div>{{ entry.header }}</div>
+    <mgl-timeline-entry-header
+      [ngStyle]="{ 'background-color': getColorForPriority(entry.priority) }"
+      (click)="onHeaderClick($event)"
+    >
+      <div>{{ entry.name }}</div>
     </mgl-timeline-entry-header>
     <mgl-timeline-entry-content
       [expandAnimationTiming]="contentAnimation ? '200ms ease' : '0ms'"
       [collapseAnimationTiming]="contentAnimation ? '100ms ease' : '0ms'"
     >
       <div>
-        <div>{{ entry.header }} happened at {{ entry.hospital }}</div>
-        <div>{{ entry.content }}</div>
+        <div>{{ entry.name }} happened at {{ entry.hospital }}</div>
+        <div>{{ entry.description }}</div>
+        <div [ngStyle]="{ display: entry.notes.length > 0 ? 'block' : 'none' }">
+          <span> Notes </span>
+          <div *ngFor="let note of entry.notes">
+            {{ note.created_at }} {{ note.note }}
+          </div>
+        </div>
       </div>
     </mgl-timeline-entry-content>
-    <mgl-timeline-entry-side>{{ entry.date }}</mgl-timeline-entry-side>
+    <mgl-timeline-entry-side>{{ entry.created_at }}</mgl-timeline-entry-side>
     <mgl-timeline-entry-dot
       [class]="color ? 'primary' : 'accent'"
       [size]="size"
