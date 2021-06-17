@@ -14,18 +14,26 @@
       [collapseAnimationTiming]="contentAnimation ? '100ms ease' : '0ms'"
     >
       <div>
-        <div>{{ entry.name }} happened at {{ entry.hospital }}</div>
-        <div>{{ entry.description }}</div>
-        <div [ngStyle]="{ display: entry.notes.length > 0 ? 'block' : 'none' }">
-          <span> Notes </span>
-          <div *ngFor="let note of entry.notes">
+        <span class="EventDescription">Event Description</span>
+        <div class="MainContent">
+          <div>{{ entry.name }} happened at {{ entry.hospital }}</div>
+          <div>{{ entry.description }}</div>
+        </div>
+        <div
+          [ngStyle]="{ display: entry.notes.length > 0 ? 'block' : 'none' }"
+          class="Notes"
+        >
+          <span class="NotesTitle"> Notes </span>
+          <div *ngFor="let note of entry.notes" class="NoteContent">
             {{ note.created_at }} {{ note.note }}
           </div>
         </div>
         <button (click)="openDialog(entry.id, i)">Add note</button>
       </div>
     </mgl-timeline-entry-content>
-    <mgl-timeline-entry-side>{{ entry.created_at }}</mgl-timeline-entry-side>
+    <mgl-timeline-entry-side class="Date">{{
+      entry.created_at
+    }}</mgl-timeline-entry-side>
     <mgl-timeline-entry-dot
       [class]="color ? 'primary' : 'accent'"
       [size]="size"
