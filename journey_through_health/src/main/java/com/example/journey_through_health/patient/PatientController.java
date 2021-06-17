@@ -1,5 +1,6 @@
 package com.example.journey_through_health.patient;
 
+import com.example.elasticsearch.event.EventSearchService;
 import com.example.journey_through_health.event.Event;
 import com.example.journey_through_health.event.EventService;
 import org.springframework.http.HttpStatus;
@@ -13,12 +14,15 @@ import java.util.Optional;
 @RequestMapping("/patients")
 public class PatientController {
     private final EventService eventService;
+    private final EventSearchService eventSearchService;
     private final PatientService patientService;
 
-    public PatientController(PatientService patientService, EventService eventService) {
-        this.patientService = patientService;
+    public PatientController(EventService eventService, EventSearchService eventSearchService, PatientService patientService) {
         this.eventService = eventService;
+        this.eventSearchService = eventSearchService;
+        this.patientService = patientService;
     }
+
 
     @GetMapping("/{id}")
     @ResponseBody
@@ -43,6 +47,7 @@ public class PatientController {
         if (patientData.isPresent()) {
             event.setPatient(patientData.get());
             eventService.create(event);
+            eventSearchService.create(event);
             return new ResponseEntity<>(event, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

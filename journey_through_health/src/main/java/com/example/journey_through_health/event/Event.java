@@ -41,14 +41,28 @@ public class Event {
     @Column
     private String hospital;
 
-    @Column
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
-    @Column
-    private String priority;
+    @Enumerated(EnumType.STRING)
+    private Priority priority;
 
     @CreatedDate
     @Column
     @JsonProperty("created_at")
     private Instant createdAt;
+
+    public enum Type {
+        appointment,
+        surgery,
+        exam,
+        test,
+        imaging;
+    }
+
+    public enum Priority {
+        high,
+        medium,
+        low;
+    }
 }
