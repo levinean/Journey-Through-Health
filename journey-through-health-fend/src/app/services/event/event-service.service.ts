@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
-import { Event, EVENT_PRIORITY, EVENT_TYPE } from '../../types/event';
+import {
+  Event,
+  EVENT_PRIORITY,
+  EVENT_TYPE,
+  Filter,
+  SearchFilter,
+} from '../../types/event';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -15,6 +21,7 @@ const httpOptions = {
 })
 export class EventServiceService {
   private apiUrl = 'http://localhost:8080/events';
+  private searchApiUrl = 'http://localhost:8080/events/search/';
 
   fakeEvent: Event = {
     id: 'fake_event_id',
@@ -32,15 +39,14 @@ export class EventServiceService {
   constructor(private http: HttpClient) {}
 
   getAllEvents(
-    type?: EVENT_TYPE,
-    priority?: EVENT_PRIORITY
+    filters?: Filter[],
+    searchFilter?: SearchFilter
   ): Observable<Event[]> {
-    const events: Event[] = [];
-    const queryParams = this.buildSearchParams(type, priority);
+    const queryParams = this.buildSearchParams(filters, searchFilter);
     const query =
-      queryParams.length === 0 ? this.apiUrl : `${this.apiUrl}?${queryParams}`;
-
-    events.push(this.fakeEvent);
+      queryParams.length === 0
+        ? this.apiUrl
+        : `${this.searchApiUrl}${queryParams}`;
 
     return this.http.get<Event[]>(query);
   }
@@ -66,19 +72,19 @@ export class EventServiceService {
   }
 
   private buildSearchParams(
-    type?: EVENT_TYPE,
-    priority?: EVENT_PRIORITY
+    filters?: Filter[],
+    searchFilter?: SearchFilter
   ): string {
     let query = '';
-    const searchParams: { [searchParam: string]: string } = {};
-    if (type) searchParams['type'] = type;
-    if (priority) searchParams['priority'] = priority;
-    const hasSearchParams = Object.entries(searchParams).length !== 0;
-    if (hasSearchParams) {
-      for (const [key, value] of Object.entries(searchParams)) {
-        query += `${key}=${value}&`;
-      }
-      query.slice(query.length - 1);
+    if (filters && filters.length > 0) {
+      const filterSearchParams = filters
+        .map((filter) => filter.searchParam)
+        .join(',');
+      query += filterSearchParams;
+    }
+
+    if (searchFilter && searchFilter.length > 0) {
+      query = [query, searchFilter].join(',');
     }
     return query;
   }

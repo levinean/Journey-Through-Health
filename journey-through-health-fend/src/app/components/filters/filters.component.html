@@ -2,8 +2,13 @@
   <div class="Filters-Priority">
     <span>Priorities</span>
     <form>
-      <div *ngFor="let filter of priorityFilters">
-        <input type="checkbox" [checked]="filter.checked" /> {{ filter.name }}
+      <div *ngFor="let filter of priorityFilters; let i = index">
+        <input
+          type="checkbox"
+          [checked]="filter.checked"
+          (input)="updatePriorityFilters(i)"
+        />
+        {{ filter.name }}
       </div>
     </form>
   </div>
@@ -11,8 +16,13 @@
   <div class="Filters-Types">
     <span>Types</span>
     <form>
-      <div *ngFor="let filter of typeFilters">
-        <input type="checkbox" [checked]="filter.checked" /> {{ filter.name }}
+      <div *ngFor="let filter of typeFilters; let i = index">
+        <input
+          type="checkbox"
+          [checked]="filter.checked"
+          (input)="updateTypeFilters(i)"
+        />
+        {{ filter.name }}
       </div>
     </form>
   </div>
