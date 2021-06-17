@@ -18,11 +18,11 @@ export class EventServiceService {
 
   fakeEvent: Event = {
     id: 'fake_event_id',
-    patient_id: 'fake_patient_id',
+    patientId: 'fake_patient_id',
     name: 'test',
     description: 'test Description',
     hospital: 'testHospital',
-    created_at: '05-02-2020 10:31:42',
+    createdAt: '05-02-2020 10:31:42',
     type: EVENT_TYPE.APPOINTMENT,
     priority: EVENT_PRIORITY.HIGH,
   };

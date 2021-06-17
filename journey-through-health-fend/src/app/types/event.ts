@@ -14,11 +14,11 @@ export enum EVENT_PRIORITY {
 
 export type Event = {
   id: string;
-  patient_id: string;
+  patientId: string;
   name: string;
   description: string;
   hospital: string;
-  created_at: string;
+  createdAt: string;
   type: EVENT_TYPE;
   priority: EVENT_PRIORITY;
 };
@@ -27,4 +27,5 @@ export type TimelineEvent = {
   header: string;
   content: string;
   date: string;
+  hospital: string;
 };

@@ -1,6 +1,6 @@
 export type Note = {
   id: string;
-  event_id: string;
+  eventId: string;
   note: string;
-  created_at: string;
+  createdAt: string;
 };
