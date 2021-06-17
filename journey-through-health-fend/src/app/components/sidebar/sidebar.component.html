@@ -1,0 +1,15 @@
+<ng-sidebar-container class="sidebar">
+  <!-- A sidebar -->
+  <ng-sidebar [(opened)]="_opened">
+    <app-filters></app-filters>
+  </ng-sidebar>
+
+  <!-- Page content -->
+  <div
+    ng-sidebar-content
+    [ngStyle]="{ 'margin-left': _opened ? '100px' : '0px' }"
+  >
+    <button (click)="_toggleSidebar()">Toggle sidebar</button>
+    <app-timeline></app-timeline>
+  </div>
+</ng-sidebar-container>
