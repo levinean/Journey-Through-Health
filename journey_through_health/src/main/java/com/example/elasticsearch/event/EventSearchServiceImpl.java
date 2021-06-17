@@ -20,7 +20,9 @@ public class EventSearchServiceImpl implements EventSearchService {
                 .hospital(event.getHospital())
                 .createdAt(event.getCreatedAt())
                 .type(EventDocument.Type.valueOf(event.getType().toString()))
-                .priority(EventDocument.Priority.valueOf(event.getPriority().toString())).build();
+                .priority(EventDocument.Priority.valueOf(event.getPriority().toString()))
+                .notes(event.getNotes())
+                .build();
         return eventSearchRepository.save(eventDocument);
     }
 }
