@@ -2,7 +2,6 @@ package com.example.journey_through_health.patient;
 
 import com.example.journey_through_health.event.Event;
 import com.example.journey_through_health.event.EventService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,16 +12,18 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/patients")
 public class PatientController {
-    @Autowired
-    private PatientService patientService;
+    private final EventService eventService;
+    private final PatientService patientService;
 
-    @Autowired
-    private EventService eventService;
+    public PatientController(PatientService patientService, EventService eventService) {
+        this.patientService = patientService;
+        this.eventService = eventService;
+    }
 
     @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Patient> getPatient(@PathVariable Long id) {
-        Optional<Patient> patientData = patientService.getPatient(id);
+        Optional<Patient> patientData = patientService.get(id);
 
         return patientData
                 .map(patient -> new ResponseEntity<>(patient, HttpStatus.OK))
@@ -31,20 +32,20 @@ public class PatientController {
 
     @PostMapping()
     public ResponseEntity<Patient> createPatient(@RequestBody Patient patient) {
-        patientService.createPatient(patient);
+        patientService.create(patient);
         return new ResponseEntity<>(patient, HttpStatus.CREATED);
     }
 
     @PostMapping("/{id}/events")
-    public ResponseEntity<Object> createEvent(@PathVariable (value = "id") Long id,
+    public ResponseEntity<Event> createEvent(@PathVariable (value = "id") Long id,
                              @RequestBody Event event) {
-        Optional<Patient> patientData = patientService.getPatient(id);
+        Optional<Patient> patientData = patientService.get(id);
         if (patientData.isPresent()) {
             event.setPatient(patientData.get());
-            eventService.createEvent(event);
-            return new ResponseEntity<>("Event is created successfully", HttpStatus.CREATED);
+            eventService.create(event);
+            return new ResponseEntity<>(event, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>("Patient not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

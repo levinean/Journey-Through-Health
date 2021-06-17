@@ -1,28 +1,37 @@
 package com.example.journey_through_health.note;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping("/notes")
 public class NoteController {
+    private final NoteService noteService;
 
-    @Autowired
-    private NoteService service;
+    public NoteController(NoteService noteService) {
+        this.noteService = noteService;
+    }
 
     @PostMapping()
-    public Note addNote(@RequestBody Note newNote) {
-        return service.addNote(newNote);
+    public Note addNote(@RequestBody Note note) {
+        return noteService.create(note);
     }
 
     @PutMapping("/{id}")
-    public Note editNote(@RequestBody Note newNote, @PathVariable Long id) throws Exception {
-        return service.editNote(id, newNote);
+    public Note editNote(@RequestBody Note newNote, @PathVariable Long id) {
+        return noteService.edit(id, newNote);
     }
 
     @DeleteMapping("/{id}")
-    public Note deleteNote(@PathVariable Long id) throws Exception {
-        return service.deleteNote(id);
+    public ResponseEntity<Note> deleteNote(@PathVariable Long id) {
+        Optional<Note> noteData = noteService.delete(id);
+
+        return noteData
+                .map(note -> new ResponseEntity<>(note, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

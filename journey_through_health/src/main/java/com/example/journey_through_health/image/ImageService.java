@@ -1,37 +1,46 @@
 package com.example.journey_through_health.image;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.journey_through_health.JourneyCrud;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ImageService {
+public class ImageService implements JourneyCrud<Image> {
 
-    @Autowired
-    private ImageRepository imageRepo;
+    private final ImageRepository imageRepo;
 
-    public Image addImage(Image newImage) {
-        newImage.setCreatedAt(Instant.now());
-        return imageRepo.save(newImage);
+    public ImageService(ImageRepository imageRepo) {
+        this.imageRepo = imageRepo;
     }
 
-    public Image deleteImage(Long imageId) throws Exception {
-        Optional<Image> image = imageRepo.findById(imageId);
-        if (image.isEmpty()) {
-            throw new Exception(String.format("No image with the id %d", imageId));
-        }
-        imageRepo.deleteById(imageId);
-        return image.get();
+    public Image create(Image image) {
+        image.setCreatedAt(Instant.now());
+        return imageRepo.save(image);
     }
 
-    public Image editImage(Long imageId, Image newImage) throws Exception {
-        Optional<Image> image = imageRepo.findById(imageId);
-        if (image.isEmpty()) {
-            throw new Exception(String.format("No image with the id %d", imageId));
-        }
-        imageRepo.deleteById(imageId);
-        return imageRepo.save(newImage);
+    @Override
+    public Image edit(Long id, Image o) {
+        return null;
     }
+
+    @Override
+    public Optional<Image> get(Long id) {
+        return Optional.empty();
+    }
+
+    public Optional<Image> delete(Long id) {
+        Optional<Image> image = imageRepo.findById(id);
+        imageRepo.deleteById(id);
+        return image;
+    }
+
+    @Override
+    public List<Image> listAll() {
+        return new ArrayList<>();
+    }
+
 }

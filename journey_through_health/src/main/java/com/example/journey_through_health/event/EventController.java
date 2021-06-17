@@ -1,6 +1,5 @@
 package com.example.journey_through_health.event;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,19 +10,22 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/events")
 public class EventController {
-    @Autowired
-    private EventService eventService;
+    private final EventService eventService;
+
+    public EventController(EventService eventService) {
+        this.eventService = eventService;
+    }
 
     @GetMapping("")
     public ResponseEntity<Object> getAllEvents(@RequestParam(value = "type", defaultValue = "all") String type,
                                                @RequestParam(value = "priority", defaultValue = "all") String priority) {
-        return new ResponseEntity<>(eventService.getEvents(), HttpStatus.OK);
+        return new ResponseEntity<>(eventService.listAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     @ResponseBody
     public ResponseEntity<Event> getEvent(@PathVariable Long id) {
-        Optional<Event> eventData = eventService.getEvent(id);
+        Optional<Event> eventData = eventService.get(id);
 
         return eventData
                 .map(event -> new ResponseEntity<>(event, HttpStatus.OK))

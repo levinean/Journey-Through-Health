@@ -1,36 +1,44 @@
 package com.example.journey_through_health.note;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.journey_through_health.JourneyCrud;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 
 @Service
-public class NoteService {
-    @Autowired
-    private NoteRepository noteRepo;
+public class NoteService implements JourneyCrud<Note> {
+    private final NoteRepository noteRepo;
 
-    public Note addNote(Note newNote) {
+    public NoteService(NoteRepository noteRepo) {
+        this.noteRepo = noteRepo;
+    }
+
+    public Note create(Note newNote) {
         newNote.setCreatedAt(Instant.now());
         return noteRepo.save(newNote);
     }
 
-    public Note deleteNote(Long noteId) throws Exception {
+    public Optional<Note> delete(Long noteId) {
         Optional<Note> note = noteRepo.findById(noteId);
-        if (note.isEmpty()) {
-            throw new Exception(String.format("No note with the id %d", noteId));
-        }
         noteRepo.deleteById(noteId);
-        return note.get();
+        return note;
     }
 
-    public Note editNote(Long noteId, Note newNote) throws Exception {
+    @Override
+    public List<Note> listAll() {
+        return null;
+    }
+
+    public Note edit(Long noteId, Note newNote) {
         Optional<Note> note = noteRepo.findById(noteId);
-        if (note.isEmpty()) {
-            throw new Exception(String.format("No note with the id %d", noteId));
-        }
         noteRepo.deleteById(noteId);
         return noteRepo.save(newNote);
+    }
+
+    @Override
+    public Optional<Note> get(Long id) {
+        return Optional.empty();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.journey_through_health.patient;
 
 import com.example.journey_through_health.event.Event;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.ToString;
 import javax.persistence.*;
@@ -25,5 +26,6 @@ public class Patient {
     private String email;
 
     @Column
+    @JsonProperty("phone_number")
     private String phoneNumber;
 }

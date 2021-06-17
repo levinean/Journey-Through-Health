@@ -4,6 +4,7 @@ import com.example.journey_through_health.image.Image;
 import com.example.journey_through_health.note.Note;
 import com.example.journey_through_health.patient.Patient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
@@ -48,5 +49,6 @@ public class Event {
 
     @CreatedDate
     @Column
+    @JsonProperty("created_at")
     private Instant createdAt;
 }
