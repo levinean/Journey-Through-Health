@@ -38,10 +38,7 @@ export class TimelineComponent implements OnInit {
       .subscribe(({ filters, searchNameFilter, searchHospitalFilter }) => {
         this.eventService
           .getAllEvents(filters, searchNameFilter, searchHospitalFilter)
-          .subscribe((events: Event[]) => {
-            console.log(events);
-            this.entries = events;
-          });
+          .subscribe((events: Event[]) => (this.entries = events));
       });
   }
 
