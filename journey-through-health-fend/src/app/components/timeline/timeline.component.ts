@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+
+import { Subscription } from 'rxjs';
+
 import { EventServiceService } from '../../services/event/event-service.service';
+import { FilterServiceService } from '../../services/filters/filter-service.service';
 import { NoteServiceService } from '../../services/note/note-service.service';
 import { Event, EVENT_PRIORITY } from '../../types/event';
 import { Note } from '../../types/note';
@@ -21,12 +25,22 @@ export class TimelineComponent implements OnInit {
   dotAnimation: boolean = true;
   side = 'left';
   showAddNoteModal = false;
+  subscription: Subscription;
 
   constructor(
     private eventService: EventServiceService,
     private noteService: NoteServiceService,
+    private filterService: FilterServiceService,
     public dialog: MatDialog
-  ) {}
+  ) {
+    this.subscription = this.filterService
+      .onFilterChange()
+      .subscribe(({ filters, searchFilter }) => {
+        this.eventService
+          .getAllEvents(filters, searchFilter)
+          .subscribe((events: Event[]) => (this.entries = events));
+      });
+  }
 
   ngOnInit(): void {
     this.eventService.getAllEvents().subscribe((events: Event[]) => {

@@ -27,3 +27,11 @@ export type Event = {
   notes: Note[];
   images: Image[];
 };
+
+export type Filter = {
+  checked: boolean;
+  name: string;
+  searchParam: string;
+};
+
+export type SearchFilter = string;
